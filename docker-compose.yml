@@ -1,0 +1,19 @@
+services:
+  visioncraft:
+    build: .
+    runtime: nvidia
+    network_mode: "host"
+    privileged: true
+    ipc: "host"
+    environment:
+      - DISPLAY=$DISPLAY
+    devices:
+      - /dev/video0:/dev/video0
+    volumes:
+      - ./src:/app/src
+      - ./data:/app/data
+      - ./models:/app/models
+      - /usr/lib/aarch64-linux-gnu/tegra:/usr/lib/aarch64-linux-gnu/tegra
+      - /usr/lib/aarch64-linux-gnu/tegra-egl:/usr/lib/aarch64-linux-gnu/tegra-egl
+    working_dir: /app/src
+    command: ["tail", "-f", "/dev/null"]
